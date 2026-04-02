@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCT — Universal Customize Tool | Release 1.0 T</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        /* ПЛАВНЫЙ ПЕРЕХОД МЕЖДУ РАЗДЕЛАМИ */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --card: #161616;
+            --accent: #0078D4;
+            --accent-glow: rgba(0, 120, 212, 0.4);
+            --text-main: #ffffff;
+            --text-dim: #a0a0a0;
+            --border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ШАПКА САЙТА */
+        header {
+            padding: 15px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* АНИМИРОВАННЫЙ ЛОГОТИП UCT */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #60cdff;
+            font-weight: bold;
+            font-size: 24px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 60px; /* Ширина для UCT */
+        }
+
+        .logo-container:hover {
+            width: 320px; /* Ширина для полной фразы */
+        }
+
+        .logo-full {
+            opacity: 0;
+            margin-left: 10px;
+            font-size: 18px;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-container:hover .logo-full {
+            opacity: 1;
+        }
+
+        .nav-links a { 
+            color: var(--text-dim); 
+            text-decoration: none; 
+            margin-left: 25px; 
+            font-size: 14px; 
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--text-main); }
+
+        /* ГЕРОЙ СЕКЦИЯ */
+        .hero {
+            padding: 120px 10% 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .bg-glow {
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            filter: blur(60px);
+        }
+
+        .hero h1 { 
+            font-size: 4.5rem; 
+            margin-bottom: 20px; 
+            font-weight: 800; 
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { font-size: 1.3rem; color: var(--text-dim); max-width: 800px; margin: 0 auto 40px; }
+
+        .btn-download {
+            display: inline-block;
+            padding: 18px 50px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px var(--accent-glow);
+            transition: 0.3s;
+        }
+
+        .btn-download:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 40px var(--accent-glow); 
+            background: #0086ed; 
+        }
+
+        /* СЕТКА ФУНКЦИЙ */
+        .features {
+            padding: 100px 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            background: #1a1a1a;
+        }
+
+        .card i { font-size: 35px; color: var(--accent); margin-bottom: 20px; }
+        .card h3 { font-size: 22px; margin-bottom: 15px; }
+        .card p { color: var(--text-dim); line-height: 1.6; }
+
+        /* ИНФО И FAQ */
+        .faq-section {
+            padding: 100px 10%;
+            background: #0d0d0d;
+        }
+
+        .faq-item {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item h4 { font-size: 20px; margin-bottom: 10px; color: #60cdff; }
+        .faq-item p { color: var(--text-dim); }
+
+        /* ФУТЕР */
+        footer {
+            padding: 60px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .socials a { color: var(--text-dim); font-size: 22px; margin-left: 20px; transition: 0.3s; }
+        .socials a:hover { color: white; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .logo-container:hover { width: 60px; } /* Отключаем на мобилках */
+            .logo-full { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo-container">
+            UCT<span class="logo-full">— Universal Customize Tool</span>
+        </a>
+        <nav class="nav-links">
+            <a href="#features">Функции</a>
+            <a href="#faq">FAQ</a>
+            <a href="https://github.com/AlbeePython">GitHub</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="bg-glow"></div>
+        <h1>Твоя Windows. Твои правила.</h1>
+        <p>UCT — это профессиональный инструмент для настройки Windows 11. Возвращайте классическое меню, отключайте слежку и ИИ в один клик. Чистый код. Никакой рекламы. Только результат.</p>
+        
+        <a href="https://github.com/AlbeePython/Universal-Customize-Tool/releases/download/release_1.0/UCT.ver.1.0.zip" class="btn-download">
+            <i class="fa-solid fa-download"></i> Скачать v1.0 Release T
+        </a>
+    </section>
+
+    <section class="features" id="features">
+        <div class="card">
+            <i class="fa-solid fa-bolt"></i>
+            <h3>Context 10 Styler</h3>
+            <p>Устали от "Показать дополнительные параметры"? Верните классическое меню Windows 10 мгновенно.</p>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-robot"></i>
+            <h3>Bye Bye Copilot</h3>
+            <p>Полностью удаляет интеграцию ИИ Copilot из панели задач и реестра для вашей приватности.</p>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <h3>Clean Search</h3>
+            <p>Убирает Bing и рекламу из поиска. Ищите только свои файлы, а не мусор из интернета.</p>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-trash-can"></i>
+            <h3>Taskbar Bin</h3>
+            <p>Интеграция MiniBinKT позволяет держать корзину прямо в трее. Рабочий стол станет чище.</p>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-clock"></i>
+            <h3>Clock Seconds</h3>
+            <p>Включайте отображение секунд в системном трее без сторонних тяжелых утилит.</p>
+        </div>
+        <div class="card">
+            <i class="fa-solid fa-rotate-left"></i>
+            <h3>Safe Rollback</h3>
+            <p>Любое изменение можно отменить одной красной кнопкой. Система всегда под защитой.</p>
+        </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+        <h2 style="font-size: 36px; margin-bottom: 50px; text-align: center;">Часто задаваемые вопросы</h2>
+        <div class="faq-item">
+            <h4>Безопасно ли это для системы?</h4>
+            <p>UCT использует только официальные ключи реестра и политики Windows. Мы не патчим системные библиотеки, поэтому ваша ОС остается стабильной.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Нужны ли права администратора?</h4>
+            <p>Да, так как программа вносит изменения в системные разделы реестра для кастомизации интерфейса.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Как обновить программу?</h4>
+            <p>Следите за обновлениями на нашем GitHub. Просто скачайте новую версию и запустите её поверх старой.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            © 2026 ZAPL Programming. Разработано с любовью к коду.<br>
+            <span style="color: #444; font-size: 12px;">UCT — независимый проект, не связанный с Microsoft.</span>
+        </div>
+        <div class="socials">
+            <a href="https://t.me/zapl_programing"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://github.com/@AlbeePython"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </footer>
+
+</body>
+</html>
